@@ -15,6 +15,10 @@ RUN apt-get update && \
 # Working directory
 WORKDIR /usr/src/app
 
+# Force git to use HTTPS instead of SSH
+RUN git config --global url."https://github.com/".insteadOf ssh://git@github.com/ && \
+    git config --global url."https://github.com/".insteadOf git@github.com:
+
 # Install dependencies first (layer caching)
 COPY package.json ./
 RUN npm install --legacy-peer-deps --omit=dev
