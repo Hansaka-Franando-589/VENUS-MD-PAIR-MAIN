@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QUEEN VENUS MD - Premium WhatsApp Bot</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #FFD700;
+      --gold-dark: #B8860B;
+      --gold-light: #FFF0A8;
+      --red-flame: #FF4500;
+      --dark-bg: #0A0A0A;
+      --card-bg: rgba(15, 15, 15, 0.7);
+      --glass-border: rgba(255, 215, 0, 0.25);
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; cursor: none; } /* Hide default cursor */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #000;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    /* Custom Cursor */
+    .cursor-dot, .cursor-glow {
+      position: fixed;
+      top: 0; left: 0;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+    }
+    .cursor-dot {
+      width: 8px; height: 8px;
+      background: var(--gold);
+      box-shadow: 0 0 10px var(--gold);
+      transition: width 0.2s, height 0.2s;
+    }
+    .cursor-glow {
+      width: 40px; height: 40px;
+      border: 1px solid rgba(255, 215, 0, 0.5);
+      background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, transparent 60%);
+      transition: transform 0.1s ease-out;
+    }
+
+    /* Background FX */
+    .bg-animation {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: -1;
+      background: radial-gradient(circle at 15% 50%, rgba(255, 69, 0, 0.1), transparent 30%),
+                  radial-gradient(circle at 85% 30%, rgba(255, 215, 0, 0.1), transparent 30%),
+                  radial-gradient(circle at 50% 80%, rgba(184, 134, 11, 0.15), transparent 40%);
+      background-size: 200% 200%;
+      animation: ambientBg 15s ease infinite alternate;
+    }
+
+    @keyframes ambientBg {
+      0% { background-position: 0% 50%; opacity: 0.8; }
+      100% { background-position: 100% 50%; opacity: 1; }
+    }
+
+    /* Navbar */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 8%;
+      position: fixed;
+      width: 100%;
+      top: 0; z-index: 1000;
+      background: rgba(5, 5, 5, 0.85);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid var(--glass-border);
+      transition: all 0.3s ease;
+    }
+    .logo {
+      font-family: 'Cinzel', serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(45deg, var(--gold), #FFF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .nav-links { list-style: none; display: flex; gap: 30px; }
+    .nav-links li a {
+      color: #ccc;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .nav-links li a:hover { color: var(--gold); }
+
+    /* Hero Section */
+    section.hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 150px 20px 80px;
+      position: relative;
+    }
+    .hero-badge {
+      background: rgba(255, 215, 0, 0.1);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 5px 15px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      margin-bottom: 25px;
+      text-transform: uppercase;
+      opacity: 0; transform: translateY(20px);
+      animation: fadeUp 1s forwards 0.2s;
+    }
+    .hero-title {
+      font-family: 'Cinzel', serif;
+      font-size: 4.5rem;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 25px;
+      text-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
+      background: linear-gradient(to right, #FFF, var(--gold-light), var(--gold), var(--red-flame));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      opacity: 0; transform: translateY(20px);
+      animation: fadeUp 1s forwards 0.4s;
+    }
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: #bbb;
+      max-width: 700px;
+      margin-bottom: 50px;
+      line-height: 1.7;
+      opacity: 0; transform: translateY(20px);
+      animation: fadeUp 1s forwards 0.6s;
+    }
+    .hero-btns {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      opacity: 0; transform: translateY(20px);
+      animation: fadeUp 1s forwards 0.8s;
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .btn-primary, .btn-secondary {
+      padding: 18px 45px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-radius: 30px;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      cursor: none; /* override for custom cursor styling */
+    }
+    .btn-primary {
+      background: linear-gradient(45deg, var(--gold), var(--red-flame));
+      color: #000;
+      box-shadow: 0 10px 30px rgba(255, 69, 0, 0.3);
+    }
+    .btn-primary:hover {
+      box-shadow: 0 15px 40px rgba(255, 215, 0, 0.6);
+      transform: translateY(-3px);
+      color: #fff;
+    }
+    .btn-secondary {
+      background: rgba(0,0,0,0.5);
+      border: 2px solid var(--gold);
+      color: var(--gold);
+      backdrop-filter: blur(10px);
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 215, 0, 0.1);
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+      transform: translateY(-3px);
+    }
+
+    /* Shared Sections */
+    section { padding: 100px 8%; }
+    .section-header { text-align: center; margin-bottom: 70px; }
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: 2.8rem;
+      color: var(--gold);
+      margin-bottom: 15px;
+    }
+    .section-desc { color: #aaa; font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+
+    /* Scroll Reveal Classes */
+    .reveal {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.8s ease-out;
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Features Grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+      perspective: 1000px; /* For 3D Tilt */
+    }
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 40px 30px;
+      backdrop-filter: blur(10px);
+      /* 3D transitions */
+      transition: transform 0.1s, box-shadow 0.1s;
+      transform-style: preserve-3d;
+    }
+    .feature-card:hover {
+      box-shadow: 0 15px 35px rgba(255, 215, 0, 0.1);
+      border-color: var(--gold);
+      cursor: none;
+    }
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, var(--gold), var(--red-flame));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transform: translateZ(30px); /* Pops out in 3D */
+    }
+    .feature-card h3 {
+      font-size: 1.4rem;
+      color: #fff;
+      margin-bottom: 15px;
+      font-family: 'Cinzel', serif;
+      letter-spacing: 1px;
+      transform: translateZ(20px);
+    }
+    .feature-card p { color: #999; line-height: 1.6; transform: translateZ(10px); }
+
+    /* Commands Layout */
+    .modules-container {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .module-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(20,20,20,0.8);
+      border-left: 4px solid var(--gold);
+      padding: 30px;
+      border-radius: 0 15px 15px 0;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .module-item:hover { background: rgba(30,30,30,0.9); transform: translateX(10px); cursor: none;}
+    .module-info h3 { font-size: 1.5rem; color: #fff; margin-bottom: 5px; }
+    .module-info p { color: #888; font-size: 1rem; }
+    .module-code {
+      background: #000;
+      padding: 15px 25px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,215,0,0.3);
+      font-family: monospace;
+      color: var(--gold-light);
+      font-size: 1.1rem;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+    }
+
+    /* BOTZ / Versions Section */
+    .bot-versions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 40px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .bot-card {
+      background: linear-gradient(145deg, rgba(20,20,20,1) 0%, rgba(5,5,5,1) 100%);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 50px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.4s, border-color 0.4s;
+    }
+    .bot-card:hover { transform: translateY(-10px); border-color: var(--gold); cursor: none;}
+    .bot-card-premium::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 5px;
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--red-flame));
+    }
+    .bot-card h3 { font-family: 'Cinzel', serif; font-size: 2rem; color: var(--gold); margin-bottom: 15px; }
+    .bot-card p { color: #aaa; margin-bottom: 30px; line-height: 1.6; }
+    .bot-btn {
+      display: inline-block;
+      padding: 12px 30px;
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+      cursor: none;
+    }
+    .bot-btn:hover { background: var(--gold); color: #000; box-shadow: 0 0 15px rgba(255,215,0,0.4); }
+
+    /* CTA Section */
+    .cta-section {
+      text-align: center;
+      padding: 120px 20px;
+      background: radial-gradient(circle at center, rgba(184, 134, 11, 0.1) 0%, transparent 70%);
+      border-top: 1px solid rgba(255,215,0,0.1);
+      border-bottom: 1px solid rgba(255,215,0,0.1);
+    }
+    .cta-section h2 { font-family: 'Cinzel', serif; font-size: 3rem; color: #fff; margin-bottom: 20px; }
+    .cta-section p { color: #aaa; font-size: 1.2rem; margin-bottom: 40px; max-width: 600px; margin-inline: auto; }
+
+    /* Footer */
+    footer {
+      background: #020202;
+      padding: 60px 8% 30px;
+      text-align: center;
+    }
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      border-bottom: 1px solid rgba(255,215,0,0.1);
+      padding-bottom: 30px;
+      margin-bottom: 30px;
+    }
+    .footer-logo { font-family: 'Cinzel', serif; font-size: 1.5rem; color: var(--gold); }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { color: #888; text-decoration: none; transition: color 0.3s; cursor: none;}
+    .footer-links a:hover { color: var(--gold); }
+    .copyright { color: #fff; font-family: 'Cinzel', serif; font-weight: 800; font-size: 1rem; letter-spacing: 1px;}
+
+    @media (max-width: 900px) {
+      .hero-title { font-size: 3rem; }
+      .nav-links { display: none; }
+      .module-item { flex-direction: column; text-align: center; gap: 20px; }
+      .footer-content { flex-direction: column; gap: 20px; text-align: center; }
+      /* Disable cursor fx on mobile */
+      html, body, a, button { cursor: auto !important; }
+      .cursor-dot, .cursor-glow { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom Cursor Elements -->
+  <div class="cursor-dot" id="cursor-dot"></div>
+  <div class="cursor-glow" id="cursor-glow"></div>
+
+  <div class="bg-animation"></div>
+
+  <!-- Navbar Checkout Login button removed! -->
+  <nav>
+    <div class="logo">Queen Venus</div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#commands">Modules</a></li>
+      <li><a href="#botz">Versions</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="hero-badge">Queen Venus Official Edition</div>
+    <h1 class="hero-title">Upgrade Your WhatsApp Experience</h1>
+    <p class="hero-subtitle">Powerful BOT architecture & modules for multiple usages. Get started with the most elegant WhatsApp bot seamlessly engineered by Hansaka P. Fernando.</p>
+    
+    <div class="hero-btns">
+      <!-- Pair and QR kept here within Call To Action -->
+      <a href="/pair" class="btn-primary" target="_blank">Get Pair Code</a>
+      <a href="/qr" class="btn-secondary" target="_blank">Scan QR</a>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="reveal">
+    <div class="section-header">
+      <h2 class="section-title">Why Choose Queen Venus?</h2>
+      <p class="section-desc">Experience unmatched quality and exclusive features designed for the ultimate royal user.</p>
+    </div>
+    
+    <div class="features-grid">
+      <!-- 3D Tilt Cards -->
+      <div class="feature-card tilt-card">
+        <div class="feature-icon">⬇️</div>
+        <h3>Multi-Platform Download</h3>
+        <p>Download videos and media directly from YouTube, Facebook, TikTok, Instagram and more with a single short command.</p>
+      </div>
+      <div class="feature-card tilt-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Lightning Fast</h3>
+        <p>High-speed message processing with 99.9% uptime and ultra-low latency specifically optimized for WhatsApp Web sockets.</p>
+      </div>
+      <div class="feature-card tilt-card">
+        <div class="feature-icon">🔒</div>
+        <h3>Secure & Private</h3>
+        <p>Your session and data handling are strictly secured. The fundamental End-to-end encryption remains fully intact.</p>
+      </div>
+      <div class="feature-card tilt-card">
+        <div class="feature-icon">🌍</div>
+        <h3>Global Coverage</h3>
+        <p>Built with robust server architectures and light frameworks enabling responsive pings globally for optimal performance.</p>
+      </div>
+      <div class="feature-card tilt-card">
+        <div class="feature-icon">🤖</div>
+        <h3>Advanced AI</h3>
+        <p>Interact with Premium AI modules designed to answer questions, generate AI images, and assist naturally within groups.</p>
+      </div>
+      <div class="feature-card tilt-card">
+        <div class="feature-icon">👑</div>
+        <h3>Premium Features</h3>
+        <p>Advanced group management filters, targeted auto-replies, anti-delete modules, and highly customizable personal settings.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Commands / Modules Section -->
+  <section id="commands" class="reveal" style="background: rgba(10,10,10,0.5);">
+    <div class="section-header">
+      <h2 class="section-title">Available Modules</h2>
+      <p class="section-desc">Extensive built-in commands handling massive requests just like a powerful API network.</p>
+    </div>
+    
+    <div class="modules-container">
+      <div class="module-item reveal">
+        <div class="module-info">
+          <h3>Media API Downloader</h3>
+          <p>Download high-quality videos and audio instantly without leaving chat.</p>
+        </div>
+        <div class="module-code">.ytmp4 / .tiktok / .fb</div>
+      </div>
+      
+      <div class="module-item reveal">
+        <div class="module-info">
+          <h3>Artificial Intelligence Native</h3>
+          <p>Interact with advanced LLMs natively and generate AI art directly.</p>
+        </div>
+        <div class="module-code">.ai [prompt] / .imagine</div>
+      </div>
+
+      <div class="module-item reveal">
+        <div class="module-info">
+          <h3>Anime & Entertainment Suite</h3>
+          <p>Fetch details, watch lists, reviews, or download Anime automatically.</p>
+        </div>
+        <div class="module-code">.anime [name] / .movie</div>
+      </div>
+
+      <div class="module-item reveal">
+        <div class="module-info">
+          <h3>Full Group Management</h3>
+          <p>Protect, manage, and monitor your groups effortlessly with admin power.</p>
+        </div>
+        <div class="module-code">.kick / .promote / .mute</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bot Models Section -->
+  <section id="botz" class="reveal">
+    <div class="section-header">
+      <h2 class="section-title">QUEEN VENUS BOTZ</h2>
+      <p class="section-desc">Select the architecture perfectly tailored to your hardware and specific requirements.</p>
+    </div>
+
+    <div class="bot-versions">
+      <div class="bot-card bot-card-premium reveal tilt-card">
+        <h3>QUEEN VENUS MD</h3>
+        <p>Full-featured premium WhatsApp bot containing all comprehensive modules, advanced plugin settings, and media engines.</p>
+        <a href="https://github.com/Dinuob/Queen_dinu-MD/fork" target="_blank" class="bot-btn">Fork Repository</a>
+      </div>
+      <div class="bot-card reveal tilt-card">
+        <h3>VENUS MINI MD</h3>
+        <p>Lightweight deployment version strictly focused on raw speed, basic group management functionality, and massive battery optimization.</p>
+        <a href="https://whatsapp.com/channel/0029Vb5qtNqKbYMEtceoXV0j" target="_blank" class="bot-btn">Join Dev Channel</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section reveal">
+    <h2>Ready to Boost Your Digital Life?</h2>
+    <p>Join thousands of users uniquely utilizing our sophisticated architecture for their daily personal and group activities. Built with love and fire.</p>
+    <br>
+    <a href="/pair" class="btn-primary" target="_blank" style="display:inline-block; padding: 15px 40px; border-radius: 35px;">Launch Setup</a>
+  </section>
+
+  <!-- Footer -->
+  <footer class="reveal">
+    <div class="footer-content">
+      <div class="footer-logo">QUEEN VENUS MD</div>
+      <div class="footer-links">
+        <a href="https://whatsapp.com/channel/0029Vb5qtNqKbYMEtceoXV0j">WA Channel</a>
+        <a href="https://youtube.com">YouTube Channel</a>
+        <a href="https://wa.me/message/ORLONET77UUVI1?text=ASITHA">Support / Developer</a>
+      </div>
+    </div>
+    <p class="copyright">Copyright © 2026 Hansaka P. Fernando. All Rights Reserved.</p>
+  </footer>
+
+  <!-- ADVANCED EFFECTS SCRIPTS -->
+  <script>
+    /* 1. Custom Glowing Cursor */
+    const cursorDot = document.getElementById("cursor-dot");
+    const cursorGlow = document.getElementById("cursor-glow");
+    let mouseX = 0, mouseY = 0;
+    let glowX = 0, glowY = 0;
+
+    window.addEventListener("mousemove", function(e) {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursorDot.style.left = mouseX + "px";
+      cursorDot.style.top = mouseY + "px";
+    });
+
+    // Smooth following for glow
+    function animateCursor() {
+      glowX += (mouseX - glowX) * 0.15;
+      glowY += (mouseY - glowY) * 0.15;
+      cursorGlow.style.left = glowX + "px";
+      cursorGlow.style.top = glowY + "px";
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    /* Enlarge cursor on links/buttons */
+    const hoverElements = document.querySelectorAll("a, button, .tilt-card, .module-item");
+    hoverElements.forEach(el => {
+      el.addEventListener("mouseenter", () => {
+        cursorDot.style.width = "15px";
+        cursorDot.style.height = "15px";
+        cursorGlow.style.width = "60px";
+        cursorGlow.style.height = "60px";
+      });
+      el.addEventListener("mouseleave", () => {
+        cursorDot.style.width = "8px";
+        cursorDot.style.height = "8px";
+        cursorGlow.style.width = "40px";
+        cursorGlow.style.height = "40px";
+      });
+    });
+
+    /* 2. Scroll Reveal Animations with Intersection Observer */
+    const revealElements = document.querySelectorAll(".reveal");
+    const revealOptions = {
+      threshold: 0.15,
+      rootMargin: "0px 0px -50px 0px"
+    };
+
+    const revealObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("active");
+        observer.unobserve(entry.target); // Stop observing once revealed
+      });
+    }, revealOptions);
+
+    revealElements.forEach(el => {
+      revealObserver.observe(el);
+    });
+
+    /* 3. 3D Card Hover Effect (Vanilla JS Tilt) */
+    const tiltCards = document.querySelectorAll(".tilt-card");
+    tiltCards.forEach(card => {
+      card.addEventListener("mousemove", (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left; // x position within the element
+        const y = e.clientY - rect.top;  // y position within the element
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * -10; // Max 10 deg tilt
+        const rotateY = ((x - centerX) / centerX) * 10;
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+      });
+
+      card.addEventListener("mouseleave", () => {
+        card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+      });
+    });
+  </script>
+</body>
+</html>
