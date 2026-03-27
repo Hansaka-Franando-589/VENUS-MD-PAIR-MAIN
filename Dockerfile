@@ -6,7 +6,8 @@ RUN apt-get update && \
     ffmpeg \
     imagemagick \
     webp \
-    curl && \
+    curl \
+    git && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
