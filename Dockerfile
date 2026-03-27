@@ -7,7 +7,8 @@ RUN apt-get update && \
     imagemagick \
     webp \
     curl \
-    git && \
+    git \
+    openssh-client && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
