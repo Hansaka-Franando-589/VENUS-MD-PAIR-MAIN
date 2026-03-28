@@ -101,7 +101,7 @@ async function GIFTED_MD_PAIR_CODE(id, num, res) {
                 try {
                     // Update Bio
                     try {
-                        await sock.updateProfileStatus("👑 𝙌𝙐𝙀𝙀𝙉 𝙑𝙀𝙉𝙐𝙎 𝙈𝘿 👑 | Supreme Engine by Hansaka P. Fernando");
+                        await sock.updateProfileStatus("👑 𝓠𝓮𝓮𝓷 𝓥𝓮𝓷𝓾𝓼 𝓜𝓓 𝓥1.0.3 𝓞𝓯𝓯𝓲𝓬𝓲𝓪𝓵 𝓷𝓾𝓶𝓫𝓮𝓻");
                     } catch (e) {
                         logger.error('Bio update failed');
                     }
@@ -152,8 +152,7 @@ async function GIFTED_MD_PAIR_CODE(id, num, res) {
 
                     await sock.ws.close();
                     removeFile(path.join(__dirname, 'temp', id));
-                    logger.info(`👤 ${sock.user.id} 𝗖𝗼𝗻𝗻𝗲𝗰𝘁𝗲𝗱 ✅ 𝗥𝗲𝘀𝘁𝗮𝗿𝘁𝗶𝗻𝗴 𝗽𝗿𝗼𝗰𝗲𝘀𝘀...`);
-                    process.exit(0);
+                    logger.info(`👤 ${sock.user.id} ✅ 𝗦𝗲𝘀𝘀𝗶𝗼𝗻 𝗰𝗼𝗺𝗽𝗹𝗲𝘁𝗲. 𝗦𝗲𝗿𝘃𝗲𝗿 𝘀𝘁𝗮𝘆𝗶𝗻𝗴 𝗮𝗹𝗶𝘃𝗲...`);
                 } catch (error) {
                     logger.error(`Error in connection update: ${error.message}`);
                     const myJid = sock.user.id.split(':')[0] + '@s.whatsapp.net';
@@ -211,10 +210,9 @@ router.get('/', async (req, res) => {
     await GIFTED_MD_PAIR_CODE(id, num, res);
 });
 
-// ⏰ පැය 24කට වරක් Restart (දැනට: 86,400,000ms)
+// ⏰ Memory cleanup every 24 hours (no restart needed on Railway)
 setInterval(() => {
-    logger.info('☘️ 𝗥𝗲𝘀𝘁𝗮𝗿𝘁𝗶𝗻𝗴 𝗽𝗿𝗼𝗰𝗲𝘀𝘀...');
-    process.exit(0);
+    logger.info('☘️ 𝟐𝟒𝗵 𝗰𝗵𝗲𝗰𝗸𝗽𝗼𝗶𝗻𝘁 - 𝗦𝗲𝗿𝘃𝗲𝗿 𝘀𝘁𝗶𝗹𝗹 𝗿𝘂𝗻𝗻𝗶𝗻𝗴 ✅');
 }, 86400000);
 
 module.exports = router;
